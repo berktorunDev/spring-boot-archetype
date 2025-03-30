@@ -53,3 +53,5 @@ With this setup, the application:
 *   Sends logs to Elasticsearch (Filebeat)
 *   Displays logs (Kibana)
 *   Manages errors consistently (Global Exception Handler)
+*   All HTTP requests and responses are logged in JSON format (HttpAuditFilter)
+*   Cors settings are configured (SecurityConfig)

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.time.LocalDateTime;
 import java.util.stream.Collectors;
@@ -172,6 +173,17 @@ public class GlobalExceptionHandler {
             BadCredentialsException ex, WebRequest request) {
         log.error("Bad credentials: {}", ex.getMessage(), ex);
         return createErrorResponse(HttpStatus.UNAUTHORIZED, "Invalid username or password", request.getDescription(false));
+    }
+
+    /**
+     * Handles NoResourceFoundException.
+     * Thrown when a specific resource is not found in business logic.
+     */
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<GenericExceptionResponse> handleNoResourceFoundException(
+            NoResourceFoundException ex, WebRequest request) {
+        log.error("No resource found: {}", ex.getMessage(), ex);
+        return createErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage(), request.getDescription(false));
     }
 
     /**
