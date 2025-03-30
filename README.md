@@ -55,3 +55,4 @@ With this setup, the application:
 *   Manages errors consistently (Global Exception Handler)
 *   All HTTP requests and responses are logged in JSON format (HttpAuditFilter)
 *   Cors settings are configured (SecurityConfig)
+*   Graceful shutdown configured (application.yml)

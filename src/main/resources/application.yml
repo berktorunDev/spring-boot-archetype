@@ -10,3 +10,11 @@ management:
       enabled: true
     health:
       show-details: always
+
+server:
+    port: 8080
+    shutdown: graceful
+
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: 5s
