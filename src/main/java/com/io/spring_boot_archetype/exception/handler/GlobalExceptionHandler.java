@@ -2,6 +2,7 @@ package com.io.spring_boot_archetype.exception.handler;
 
 import com.io.spring_boot_archetype.exception.model.GenericExceptionResponse;
 import com.io.spring_boot_archetype.exception.model.NotFoundException;
+import com.io.spring_boot_archetype.ratelimiter.RateLimitExceededException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
@@ -195,6 +196,17 @@ public class GlobalExceptionHandler {
             AccessDeniedException ex, WebRequest request) {
         log.error("Access denied: {}", ex.getMessage(), ex);
         return createErrorResponse(HttpStatus.FORBIDDEN, "Access is denied", request.getDescription(false));
+    }
+
+    /**
+     * Handles RateLimitExceededException.
+     * Thrown when the rate limit for a specific endpoint is exceeded.
+     */
+    @ExceptionHandler(RateLimitExceededException.class)
+    public ResponseEntity<GenericExceptionResponse> handleRateLimitExceededException(
+            RateLimitExceededException ex, WebRequest request) {
+        log.error("Rate limit exceeded: {}", ex.getMessage(), ex);
+        return createErrorResponse(HttpStatus.TOO_MANY_REQUESTS, ex.getMessage(), request.getDescription(false));
     }
 
     /**
